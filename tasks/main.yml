@@ -1,0 +1,44 @@
+---
+# tasks file for galaxy_ng_prerequisites
+
+- name: Install NPM (distro-agnostic)
+  package:
+    name: npm
+    state: present
+  retries: "{{ galaxy_ng_package_retries }}"
+  register: result
+  until: result is succeeded
+
+- name: Cloning Ansible Hub UI
+  git:
+    repo: 'https://github.com/ansible/ansible-hub-ui.git'
+    dest: '{{ pulp_user_home }}/ansible-hub-ui'
+    force: yes
+    version: master
+    update: yes
+
+- name: Install packages based on package.json
+  npm:
+    path: '{{ pulp_user_home }}/ansible-hub-ui'
+
+- name: Building Ansible Hub UI
+  command: npm run build-standalone
+  args:
+    chdir: '{{ pulp_user_home }}/ansible-hub-ui'
+
+- name: Creates static dir
+  file:
+    path: '{{ pulp_webserver_static_dir }}'
+    owner: '{{ pulp_user }}'
+    group: '{{ pulp_group }}'
+    state: directory
+    mode: '0750'
+
+- name: Copying Ansible Hub UI to static dir
+  copy:
+    src: '{{ pulp_user_home }}/ansible-hub-ui/dist/'
+    dest: '{{ pulp_webserver_static_dir }}galaxy_ui'
+    remote_src: yes
+    owner: '{{ pulp_user }}'
+    group: '{{ pulp_group }}'
+    mode: '0750'

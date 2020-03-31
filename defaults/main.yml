@@ -1,0 +1,8 @@
+---
+# defaults file for galaxy_ng_prerequisites
+galaxy_ng_package_retries: 5
+pulp_user_home: '/var/lib/pulp'
+pulp_static_url: 'assets'
+pulp_webserver_static_dir: "{{ pulp_user_home | regex_replace('\\/$', '') }}/{{ pulp_static_url | regex_replace('^\\/|\\/$', '') }}/"
+pulp_user: pulp
+pulp_group: pulp
