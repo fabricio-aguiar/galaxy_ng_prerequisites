@@ -6,6 +6,8 @@ Galaxy NG prerequisites
 This role installs prerequisites for galaxy-ng plugin use, when installed by
 ansible-pulp.
 
+**Currently, only supports source install**
+
 Requirements
 ------------
 

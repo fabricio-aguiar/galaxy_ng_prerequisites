@@ -9,22 +9,33 @@
   register: result
   until: result is succeeded
 
-- name: Cloning Ansible Hub UI
-  git:
-    repo: 'https://github.com/ansible/ansible-hub-ui.git'
-    dest: '{{ pulp_user_home }}/ansible-hub-ui'
-    force: yes
-    version: master
-    update: yes
+- block:
 
-- name: Install packages based on package.json
-  npm:
-    path: '{{ pulp_user_home }}/ansible-hub-ui'
+  - name: Cloning Ansible Hub UI
+    git:
+      repo: 'https://github.com/ansible/ansible-hub-ui.git'
+      dest: '{{ pulp_user_home }}/ansible-hub-ui'
+      force: yes
+      version: master
+      update: yes
+    register: ansible_hub_ui_git
+    tags:
+      - molecule-idempotence-notest
 
-- name: Building Ansible Hub UI
-  command: npm run build-standalone
-  args:
-    chdir: '{{ pulp_user_home }}/ansible-hub-ui'
+  - name: Install packages based on package.json
+    npm:
+      path: '{{ pulp_user_home }}/ansible-hub-ui'
+
+  - name: Building Ansible Hub UI
+    command: npm run build-standalone
+    args:
+      chdir: '{{ pulp_user_home }}/ansible-hub-ui'
+    when:
+      - ansible_hub_ui_git is defined
+      - ansible_hub_ui_git.changed
+
+  become: yes
+  become_user: '{{ pulp_user }}'
 
 - name: Creates static dir
   file:
@@ -32,7 +43,7 @@
     owner: '{{ pulp_user }}'
     group: '{{ pulp_group }}'
     state: directory
-    mode: '0750'
+    mode: '0775'
 
 - name: Copying Ansible Hub UI to static dir
   copy:
@@ -41,4 +52,4 @@
     remote_src: yes
     owner: '{{ pulp_user }}'
     group: '{{ pulp_group }}'
-    mode: '0750'
+    mode: '0775'
