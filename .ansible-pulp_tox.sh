@@ -24,9 +24,6 @@ sudo rm -rf ./molecule/dynamic/
 sed -i '/-s default/d' tox.ini
 sed -i '/-s dynamic/d' tox.ini
 
-# Removing idempotence for now
-find ./molecule/*/molecule.yml -exec sed -i '/idempotence/d' {} \;
-
 # Show modified vars
 find ./molecule/*/group_vars/all -exec sh -c "echo; echo {}; cat {}" \;
 
