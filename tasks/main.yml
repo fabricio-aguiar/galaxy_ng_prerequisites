@@ -48,7 +48,7 @@
 - name: Copying Ansible Hub UI to static dir
   copy:
     src: '{{ pulp_user_home }}/ansible-hub-ui/dist/'
-    dest: '{{ pulp_webserver_static_dir }}galaxy_ui'
+    dest: '{{ pulp_webserver_static_dir }}galaxy_ng'
     remote_src: yes
     owner: '{{ pulp_user }}'
     group: '{{ pulp_group }}'

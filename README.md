@@ -4,7 +4,7 @@ Galaxy NG prerequisites
 ===============================
 
 This role installs prerequisites for galaxy-ng plugin use, when installed by
-ansible-pulp.
+pulp_installer.
 
 **Currently, only supports source install**
 
@@ -25,7 +25,7 @@ as the foldername `pulp.galaxy_ng_prerequisites`, by either:
 Example Playbook
 ----------------
 
-Here's an example playbook for using galaxy_ng_prerequisites as part of ansible-pulp.
+Here's an example playbook for using galaxy_ng_prerequisites as part of pulp_installer.
 
     ---
     - hosts: all

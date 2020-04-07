@@ -39,4 +39,4 @@ jobs:
       #     docker pull quay.io/pulp/pulp-ci-f31:3.0.0
       #     echo "::set-env name=TOXENV::py37-upgrade"
       - name: Run tox
-        run: ./.ansible-pulp_tox.sh
+        run: ./.pulp_installer_tox.sh
