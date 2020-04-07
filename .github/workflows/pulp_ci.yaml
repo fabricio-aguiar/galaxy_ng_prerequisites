@@ -51,4 +51,4 @@ jobs:
       #     docker pull quay.io/pulp/pulp-ci-dbuster:3.0.0
       #     docker pull quay.io/pulp/pulp-ci-f31:3.0.0
       - name: Run tox
-        run: ./.ansible-pulp_tox.sh
+        run: ./.pulp_installer_tox.sh
