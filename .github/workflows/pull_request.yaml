@@ -48,8 +48,10 @@ jobs:
           docker pull quay.io/pulp/pulp-ci-c7:3.0.0
           docker pull quay.io/pulp/pulp-ci-dbuster:3.0.0
           docker pull quay.io/pulp/pulp-ci-f31:3.0.0
+      # set-env seems to have trouble with multi-line strings, so do it here.
       - name: Run tox
         run: |
+          export COMMIT_MSG=$(git log --format=%B --no-merges -1)
           export TEST_TYPE
           ./.pulp_installer_tox.sh
         env:

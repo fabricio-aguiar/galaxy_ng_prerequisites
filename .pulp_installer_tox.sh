@@ -1,8 +1,18 @@
 #!/bin/bash
 # wrapper for inserting galaxy_ng_prerequisites into the pulp_installer CI
+set -x
+# COMMIT_MSG is only set if a PR
+export PULP_ROLES_PR_NUMBER=$(echo $COMMIT_MSG | grep -oP 'Required\ PR:\ https\:\/\/github\.com\/pulp\/pulp_installer\/pull\/(\d+)' | awk -F'/' '{print $7}')
+
 cd ..
 if [ ! -e pulp_installer ]; then
   git clone https://github.com/pulp/pulp_installer
+  if [ -n "$PULP_ROLES_PR_NUMBER" ]; then
+    cd pulp_installer
+    git fetch --depth=1 origin pull/$PULP_ROLES_PR_NUMBER/head:$PULP_ROLES_PR_NUMBER
+    git checkout $PULP_ROLES_PR_NUMBER
+    cd ..
+  fi
 fi
 cd pulp_installer
 if [ ! -e roles/pulp.galaxy_ng_prerequisites ]; then
