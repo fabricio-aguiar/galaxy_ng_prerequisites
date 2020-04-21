@@ -16,15 +16,7 @@ find ./molecule/*/group_vars/all -exec sh -c "yq w -i {} pulp_install_plugins.ga
 find ./molecule/*/group_vars/all -exec sed -i 's/pulp-file/pulp-ansible/g' {} \;
 find ./molecule/*/group_vars/all -exec sed -i 's/pulp_file/pulp_ansible/g' {} \;
 
-
-# For now, we will only run source scenarios
-sudo rm -rf ./molecule/*upgrade*/
-sudo rm -rf ./molecule/*default*/
-sudo rm -rf ./molecule/dynamic/
-sed -i '/-s default/d' tox.ini
-sed -i '/-s dynamic/d' tox.ini
-
 # Show modified vars
-find ./molecule/*/group_vars/all -exec sh -c "echo; echo {}; cat {}" \;
+find ./molecule/source-{static,dynamic}group_vars/all -exec sh -c "echo; echo {}; cat {}" \;
 
 tox
