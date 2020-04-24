@@ -6,3 +6,5 @@ pulp_static_url: 'assets'
 pulp_webserver_static_dir: "{{ pulp_user_home | regex_replace('\\/$', '') }}/{{ pulp_static_url | regex_replace('^\\/|\\/$', '') }}/"
 pulp_user: pulp
 pulp_group: pulp
+developer_user: "vagrant"
+developer_user_home: "/home/vagrant"
