@@ -25,10 +25,10 @@ find ./molecule/*upgrade*/group_vars/all -exec sh -c "yq w -i {} pulp_install_pl
 find ./molecule/*/group_vars/all -exec sh -c "yq w -i {} pulp_install_plugins.galaxy-ng.prereq_role pulp.galaxy_ng_prerequisites" \;
 find ./molecule/*/group_vars/all -exec sed -i 's/pulp-file/pulp-ansible/g' {} \;
 find ./molecule/*/group_vars/all -exec sed -i 's/pulp_file/pulp_ansible/g' {} \;
-find ./molecule/*release*/group_vars/all -exec sh -c "yq w -i {} pulp_install_plugins.pulp-ansible.version 0.2.0b11" \;
-find ./molecule/*release*/group_vars/all -exec sh -c "yq w -i {} pulp_install_plugins.pulp_version.version 3.2.1" \;
-find ./molecule/*source*/group_vars/all -exec sh -c "yq w -i {} pulp_install_plugins.pulp-ansible.git_commitish 0.2.0b11" \;
-find ./molecule/*source*/group_vars/all -exec sh -c "yq w -i {} pulp_git_commitish 3.2" \;
+find ./molecule/*release*/group_vars/all -exec sh -c "yq w -i {} pulp_install_plugins.pulp-ansible.version 0.2.0b12" \;
+find ./molecule/*/group_vars/all -exec sh -c "yq w -i {} pulp_version 3.3.0" \;
+find ./molecule/*source*/group_vars/all -exec sh -c "yq w -i {} pulp_install_plugins.pulp-ansible.git_commitish 0.2.0b12" \;
+find ./molecule/*source*/group_vars/all -exec sh -c "yq w -i {} pulp_git_commitish 3.3" \;
 
 # Show modified vars
 find ./molecule/source-{static,dynamic}/group_vars/all -exec sh -c "echo; echo {}; cat {}" \;
